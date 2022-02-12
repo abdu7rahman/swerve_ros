@@ -30,7 +30,7 @@ void messageCb( const geometry_msgs::Twist& swerve) {
   digitalWrite(22, HIGH);
   digitalWrite(23, LOW);
   analogWrite(7, 100);
-  if (angle1 = convert) {
+  if (angle1 == convert) {
     analogWrite(7, 0);
     nh.loginfo("stop");
   }
