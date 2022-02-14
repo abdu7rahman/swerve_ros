@@ -18,7 +18,7 @@ class movement :
 	self.move.linear.y = a[0] * 2
 	self.move.angular.z = b[4]
 	#self.move.angular.z = -b[5] * 4
-	#rospy.loginfo("123")
+	rospy.loginfo("abdulrahman")
 	self.pub_move.publish(self.move) 
 
 
