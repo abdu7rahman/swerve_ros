@@ -14,6 +14,7 @@ int counter1 = 0;
 int counter2 = 0;
 int counter3 = 0;
 int counter4 = 0;
+
 int aState;
 int aLastState;
 
@@ -28,22 +29,30 @@ void messageCb( const geometry_msgs::Twist& swerve) {
 
   v1x = vx + o * l / 2;
   v1y = vy - o * w / 2;
+  
   v2x = vx + o * l / 2;
   v2y = vy + o * w / 2;
+  
   v3x = vx - o * l / 2;
   v3y = vy + o * w / 2;
+  
   v4x = vx - o * l / 2;
   v4y = vy - o * w / 2;
+  
   a = vx - o * l / 2;
   b = vx + o * l / 2;
   c = vy - o * w / 2;
   d = vy + o * w / 2;
+  
   speed1 = sqrt((b * b) + (c * c));
   angle1 = atan2(b, c) * 180 / 3.14;
+  
   speed2 = sqrt((b * b) + (d * d));
   angle2 = atan2(b, d) * 180 / 3.14;
+  
   speed3 = sqrt((a * a) + (d * d));
   angle3 = atan2(a, d) * 180 / 3.14;
+  
   speed4 = sqrt((a * a) + (c * c));
   angle4 = atan2(a, c) * 180 / 3.14;
   
@@ -62,10 +71,12 @@ void messageCb( const geometry_msgs::Twist& swerve) {
 void setup()
 {
   ros::Subscriber<geometry_msgs::Twist> sub("cmd_vel", &messageCb );
+  
   pinMode (outputA, INPUT);
   pinMode (outputB, INPUT);
 
   aLastState = digitalRead(outputA);
+  
   pinMode(7, OUTPUT);
   pinMode(22, OUTPUT);
   pinMode(23, OUTPUT);
@@ -83,12 +94,10 @@ void loop()
     } else {
       counter1 --;
     }
-    //     Serial.print("Position: ");
-    //     Serial.println(counter);
   }
   aLastState = aState;
+  
   float convert1 = (counter1 * 6) % 360 ;
-  //Serial.println(convert);
 
   nh.spinOnce();
   delay(1);
