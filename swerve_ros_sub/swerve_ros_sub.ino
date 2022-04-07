@@ -2,7 +2,6 @@
 #include <std_msgs/Float32MultiArray.h>
 
 float speed1,angle1,speed2,angle2,speed3,angle3,speed4,angle4;
-char speed1buffer;
 
 ros::NodeHandle nh;
 
