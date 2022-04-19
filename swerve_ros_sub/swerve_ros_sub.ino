@@ -2,10 +2,10 @@
 #include <std_msgs/Float32MultiArray.h>
 #include <Servo.h>
 
-Servo M1;
-Servo M2;
-Servo M3;
-Servo M4;
+Servo m1;
+Servo m2;
+Servo m3;
+Servo m4;
 
 float speed1, angle1, speed2, angle2, speed3, angle3, speed4, angle4, actualspeed1;
 ros::NodeHandle nh;
@@ -16,6 +16,8 @@ ros::NodeHandle nh;
 int counter1 = 0;
 int aState;
 int aLastState;
+
+int M1(int, int, int), M2(int, int, int), M3(int, int, int), M4(int, int, int);
 
 void messageCb( const std_msgs::Float32MultiArray& swerve) {
 
@@ -30,10 +32,10 @@ void messageCb( const std_msgs::Float32MultiArray& swerve) {
   speed4 = swerve.data[6];
   angle4 = swerve.data[7];
 
-  M1.write(speed1);
-  M2.write(speed2);
-  M3.write(speed3);
-  M4.write(speed4);
+  m1.write(speed1);
+  m2.write(speed2);
+  m3.write(speed3);
+  m4.write(speed4);
 
   M1(1,0,angle1);
   M2(1,0,angle2);
@@ -48,18 +50,18 @@ void setup()
 {
   //actualspeed1 = map(speed1, 0.0, 0.26, 10, 45);
 
-  M1.attach(4, 1000, 2000);
-  M2.attach(5, 1000, 2000);
-  M3.attach(6, 1000, 2000);
-  M4.attach(7, 1000, 2000);
+  m1.attach(4, 1000, 2000);
+  m2.attach(5, 1000, 2000);
+  m3.attach(6, 1000, 2000);
+  m4.attach(7, 1000, 2000);
 
   nh.initNode();
   nh.subscribe(sub);
 
-  M1.write(1000);
-  M2.write(1000);
-  M3.write(1000);
-  M4.write(1000);
+  m1.write(1000);
+  m2.write(1000);
+  m3.write(1000);
+  m4.write(1000);
 
   pinMode(30, OUTPUT);
   pinMode(32, OUTPUT);
@@ -86,26 +88,26 @@ int M1(int x, int y, int z)
 {
   digitalWrite(30, x);
   digitalWrite(32, y);
-  analogWrite(p1, z);
+  analogWrite(8, z);
 }
 
 int M2(int x, int y, int z)
 {
   digitalWrite(34, x);
   digitalWrite(36, y);
-  analogWrite(p2, z);
+  analogWrite(9, z);
 }
 
 int M3(int x, int y, int z)
 {
   digitalWrite(38, x);
   digitalWrite(40, y);
-  analogWrite(p3, z);
+  analogWrite(10, z);
 }
 
 int M4(int x, int y, int z)
 {
   digitalWrite(42, x);
   digitalWrite(44, y);
-  analogWrite(p4, z);
+  analogWrite(11, z);
 }
