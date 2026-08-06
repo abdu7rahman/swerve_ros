@@ -1,0 +1,24 @@
+swerve_controller:
+  ros__parameters:
+    # Chassis geometry in metres, measured between wheel contact patches.
+    wheelbase: 0.45      # front axle to rear axle
+    track: 0.45          # left wheel to right wheel
+    max_module_speed: 1.0
+    publish_rate: 20.0
+
+joy_teleop:
+  ros__parameters:
+    axis_linear_x: 1
+    axis_linear_y: 0
+    axis_angular_z: 3
+    button_turbo: 5
+    scale_linear: 2.0
+    scale_angular: 1.5
+    turbo_multiplier: 2.0
+    deadzone: 0.1
+
+joy_node:
+  ros__parameters:
+    device_id: 0
+    deadzone: 0.05
+    autorepeat_rate: 20.0
