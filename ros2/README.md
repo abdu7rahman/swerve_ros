@@ -105,6 +105,45 @@ so the chassis still travels in the requested direction rather than curving off 
 `/finalvel` carries eight floats: `[speed1, angle1, ... speed4, angle4]`, speeds
 in m/s and angles in degrees.
 
+## Supported boards — read this before flashing
+
+**micro-ROS does not run on the ATmega2560 Mega (or any AVR board).** The
+`micro_ros_arduino` library declares:
+
+```
+architectures = stm32, OpenCR, Teensyduino, samd, sam, mbed,
+                esp32, mbed_portenta, mbed_giga, renesas_uno, mbed_opta
+```
+
+`avr` is absent, and it is not an oversight — micro-ROS needs far more RAM and
+flash than an ATmega2560 has. `rosserial` ran on the Mega because it was a thin
+serial protocol; micro-ROS embeds a whole XRCE-DDS client.
+
+So this firmware needs a different board from the ROS 1 version.
+
+### What to use instead
+
+| Board | Pins | Notes |
+|---|---|---|
+| **Arduino Due** | 54 digital | Same form factor and pin numbering as the Mega, so the pin constants in these sketches transfer unchanged. **3.3 V logic** — see the warning below. |
+| **Arduino Giga R1** | 76 digital | Most headroom; `mbed_giga`. 3.3 V logic. |
+| **Teensy 4.1** | 42 digital | Fast and cheap, but pins above 41 have to be remapped. 3.3 V logic. |
+| **ESP32** | ~34 GPIO | Wi-Fi transport instead of serial; needs the most remapping. 3.3 V logic. |
+
+The Due is the least disruptive swap: it is pin-for-pin the same layout as the
+Mega, so nothing in these sketches needs renumbering.
+
+> **Voltage warning.** Every micro-ROS-capable board above is **3.3 V**, while the
+> Mega is 5 V. Motor drivers, encoders and level-sensitive peripherals wired for
+> 5 V logic need level shifters, and feeding 5 V into a 3.3 V pin will damage the
+> board. Check each connection before powering up.
+
+### If you must stay on the Mega
+
+Keep ROS 1 on that board, or bridge it: run a small serial protocol of your own
+between the Mega and a host-side ROS 2 node. That is more work than swapping the
+board, which is why the board swap is the recommendation here.
+
 ## What changed from ROS 1
 
 | ROS 1 | ROS 2 |
